@@ -62,9 +62,10 @@ class CartRepos {
     if (!querySnapshot.exists) {
       return;
     } else {
+
       await _fbStore
           .collection('cart')
-          .doc(objCartItem.productId)
+          .doc(objCartItem.id)
           .update(objCartItem.toJson());
     }
   }

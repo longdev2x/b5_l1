@@ -7,6 +7,8 @@ import 'package:exercies4/feature/cart/controller/product_provider.dart';
 import 'package:exercies4/feature/home/controller/is_drawer_closed.dart';
 import 'package:exercies4/feature/home/view/widgets/home_drawer_widget.dart';
 import 'package:exercies4/feature/home/view/widgets/home_product_item.dart';
+import 'package:exercies4/is_loader_provider.dart';
+import 'package:exercies4/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,10 +83,12 @@ class HomeScreen extends ConsumerWidget {
                             arguments: products[index]);
                       },
                       onCartTap: () async {
-                        Navigator.of(context).pushNamed(AppRouteName.cart);
+                        ref.read(isLoaderProvider.notifier).state = true;
                         await ref
                             .read(cartProvider.notifier)
                             .addCartItem(products[index].id);
+                        ref.read(isLoaderProvider.notifier).state = false;
+                        navKey.currentState!.pushNamed(AppRouteName.cart);
                       },
                     ),
                   ),

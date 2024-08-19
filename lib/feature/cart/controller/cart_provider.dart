@@ -39,25 +39,23 @@ class CartNotifier extends AutoDisposeAsyncNotifier<List<CartItemEntity>> {
     }
   }
 
-  Future<void> addQuantity(String cartId, int quantity) async {
+  Future<void> addQuantity(String cartId) async {
     CartItemEntity? objCartItem =
         state.asData?.value.firstWhere((e) => e.id == cartId);
     if (objCartItem == null) return;
 
-    objCartItem =
-        objCartItem.copyWith(quantity: objCartItem.quantity + quantity);
+    objCartItem = objCartItem.copyWith(quantity: objCartItem.quantity + 1);
 
     _refershStateQuantity(objCartItem);
   }
 
-  Future<void> minusQuantity(String cartId, int quantity) async {
+  Future<void> minusQuantity(String cartId) async {
     CartItemEntity? objCartItem =
         state.asData?.value.firstWhere((e) => e.id == cartId);
     if (objCartItem == null) return;
-    if (objCartItem.quantity < quantity) return;
+    if (objCartItem.quantity < 0) return;
 
-    objCartItem =
-        objCartItem.copyWith(quantity: objCartItem.quantity - quantity);
+    objCartItem = objCartItem.copyWith(quantity: objCartItem.quantity - 1);
 
     _refershStateQuantity(objCartItem);
   }
@@ -73,12 +71,22 @@ class CartNotifier extends AutoDisposeAsyncNotifier<List<CartItemEntity>> {
   }
 
   Future<void> _refershStateQuantity(CartItemEntity objCartItem) async {
+    //Update Local
+    state = AsyncData(state.value!.map((e) {
+      if (e.id == objCartItem.id) {
+        e = objCartItem;
+      }
+      return e;
+    }).toList());
+    //Update sever 
     try {
+      print('zzz-${objCartItem.quantity}');
       await CartRepos.updateQuantity(objCartItem);
     } on FirebaseException catch (e) {
+      print('zzz-100');
       throw Exception(e);
     } finally {
-      state = await AsyncValue.guard(() async => await _fetchCarts());
+      // state = await AsyncValue.guard(() async => await _fetchCarts());
     }
   }
 }

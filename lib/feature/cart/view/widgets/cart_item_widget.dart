@@ -70,7 +70,7 @@ class CartItemWidget extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                   IconButton(onPressed: () {}, icon: const Icon(Icons.delete, color: Colors.red,)),
-                  Expanded(child: CartChoseQuantity(quantity: objCart.quantity))
+                  Expanded(child: CartChoseQuantity(objCart: objCart))
                 ],),
               ],
             );

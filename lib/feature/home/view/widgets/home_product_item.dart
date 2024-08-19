@@ -2,17 +2,26 @@ import 'package:exercies4/common/components/app_icon_image.dart';
 import 'package:exercies4/common/data/model/product_entity.dart';
 import 'package:exercies4/common/utils/app_colors.dart';
 import 'package:exercies4/common/utils/image_res.dart';
+import 'package:exercies4/is_loader_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HomeProductItem extends StatelessWidget {
+class HomeProductItem extends ConsumerWidget {
   final ProductEntity objProduct;
   final Function() onItemTap;
   final Function() onCartTap;
-  const HomeProductItem({super.key, required this.objProduct, required this.onItemTap, required this.onCartTap,});
+  const HomeProductItem({
+    super.key,
+    required this.objProduct,
+    required this.onItemTap,
+    required this.onCartTap,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bool isLoader = ref.watch(isLoaderProvider);
+
     return GestureDetector(
       onTap: onItemTap,
       child: Container(
@@ -32,25 +41,60 @@ class HomeProductItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          Hero(
-            tag: objProduct.id,
-            child: AppImage(
-              imagePath: objProduct.imageUrl,
-              boxFit: BoxFit.fitWidth,
-              width: double.infinity,
-              height: 100.w,
+            Hero(
+              tag: objProduct.id,
+              child: AppImage(
+                imagePath: objProduct.imageUrl,
+                boxFit: BoxFit.fitWidth,
+                width: double.infinity,
+                height: 100.w,
+              ),
             ),
-          ),
-          SizedBox(height: 10.h),
-          Text(objProduct.name, style: TextStyle(color: AppColors.primaryElement, fontWeight: FontWeight.bold, fontSize: 16.sp),),
-          Text(objProduct.description, style: TextStyle(color: AppColors.primaryElement,fontWeight: FontWeight.w400, fontSize: 12.sp),),
-          SizedBox(height: 8.h),
-          Row(children: [
-            Text('${objProduct.price.toInt()} đồng', style: TextStyle(color: AppColors.primaryElement,fontWeight: FontWeight.bold, fontSize: 12.sp),),
-            const Spacer(),
-            AppImage(onTap: onCartTap, imagePath: ImageRes.icCart, color: AppColors.primaryElement, height: 23.w, width: 23.w,),
-          ],),
-        ],),
+            SizedBox(height: 10.h),
+            Text(
+              objProduct.name,
+              style: TextStyle(
+                  color: AppColors.primaryElement,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.sp),
+            ),
+            Text(
+              objProduct.description,
+              style: TextStyle(
+                  color: AppColors.primaryElement,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12.sp),
+            ),
+            SizedBox(height: 8.h),
+            Row(
+              children: [
+                Text(
+                  '${objProduct.price.toInt()} đồng',
+                  style: TextStyle(
+                      color: AppColors.primaryElement,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12.sp),
+                ),
+                const Spacer(),
+                isLoader
+                    ? const SizedBox(
+                      height: 15,
+                      width: 15,
+                      child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                    )
+                    : AppImage(
+                        onTap: onCartTap,
+                        imagePath: ImageRes.icCart,
+                        color: AppColors.primaryElement,
+                        height: 23.w,
+                        width: 23.w,
+                      ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
