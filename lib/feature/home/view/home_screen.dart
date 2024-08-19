@@ -86,7 +86,7 @@ class HomeScreen extends ConsumerWidget {
                         ref.read(isLoaderProvider.notifier).state = true;
                         await ref
                             .read(cartProvider.notifier)
-                            .addCartItem(products[index].id);
+                            .addCartItem(products[index]);
                         ref.read(isLoaderProvider.notifier).state = false;
                         navKey.currentState!.pushNamed(AppRouteName.cart);
                       },

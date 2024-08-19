@@ -1,4 +1,6 @@
 import 'package:exercies4/common/components/app_button.dart';
+import 'package:exercies4/common/data/model/cart_entity.dart';
+import 'package:exercies4/common/routes/app_route_name.dart';
 import 'package:exercies4/feature/cart/controller/cart_provider.dart';
 import 'package:exercies4/feature/cart/view/widgets/cart_checkout_widget.dart';
 import 'package:exercies4/feature/cart/view/widgets/cart_item_widget.dart';
@@ -11,6 +13,7 @@ class CartScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    int total = 0;
     final fetchCarts = ref.watch(cartProvider);
     return Scaffold(
       appBar: AppBar(
@@ -37,24 +40,28 @@ class CartScreen extends ConsumerWidget {
               ],
             );
           }
+          for(CartItemEntity objCart in carts) {
+            total += objCart.quantity * objCart.price.toInt();
+          }
           return Column(
             children: [
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 22.w),
                   child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: carts.length,
-                      itemBuilder: (context, index) {
-                        return CartItemWidget(objCart: carts[index]);
-                      },
-                    ),
-                  
+                    shrinkWrap: true,
+                    itemCount: carts.length,
+                    itemBuilder: (context, index) {
+                      return CartItemWidget(objCart: carts[index]);
+                    },
+                  ),
                 ),
               ),
               CartCheckoutWidget(
-                onTap: () {},
-                total: 100,
+                onTap: () {
+                  Navigator.of(context).pushNamed(AppRouteName.checkOut);
+                },
+                total: total,
               )
             ],
           );

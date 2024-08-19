@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:exercies4/common/data/model/cart_entity.dart';
+import 'package:exercies4/common/data/model/product_entity.dart';
 import 'package:exercies4/feature/cart/Repos/cart_repos.dart';
 import 'package:exercies4/global.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,10 +19,11 @@ class CartNotifier extends AutoDisposeAsyncNotifier<List<CartItemEntity>> {
     return CartRepos.getAllCart();
   }
 
-  Future<void> addCartItem(String productId) async {
+  Future<void> addCartItem(ProductEntity objProduct) async {
     CartItemEntity objCartItem = CartItemEntity(
         userId: Global.storageService.getUserId(),
-        productId: productId,
+        price: objProduct.price,
+        productId: objProduct.id,
         quantity: 1);
 
     // if (state.value != null) {
@@ -80,10 +82,8 @@ class CartNotifier extends AutoDisposeAsyncNotifier<List<CartItemEntity>> {
     }).toList());
     //Update sever 
     try {
-      print('zzz-${objCartItem.quantity}');
       await CartRepos.updateQuantity(objCartItem);
     } on FirebaseException catch (e) {
-      print('zzz-100');
       throw Exception(e);
     } finally {
       // state = await AsyncValue.guard(() async => await _fetchCarts());

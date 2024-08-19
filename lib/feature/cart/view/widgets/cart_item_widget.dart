@@ -56,7 +56,7 @@ class CartItemWidget extends ConsumerWidget {
                           fontSize: 16.sp),
                     ),
                     Text(
-                      '${objProduct.price.toInt()} đồng',
+                      '${objProduct.price.toInt() * objCart.quantity} đồng',
                       style: TextStyle(
                           color: AppColors.primaryElement,
                           fontWeight: FontWeight.bold,
