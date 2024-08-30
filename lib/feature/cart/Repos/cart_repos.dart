@@ -32,7 +32,7 @@ class CartRepos {
     return ProductEntity.fromJson(docRef.data()!);
   }
 
-  static Future<void> addProduct(CartItemEntity objCartItem) async {
+  static Future<void> addProduct(CartItemEntity objCartItem, int quantity) async {
     final querySnapshot = await _fbStore
         .collection('cart')
         .where('userId', isEqualTo: Global.storageService.getUserId())
@@ -47,7 +47,7 @@ class CartRepos {
       CartItemEntity oldObjCartItem =
           CartItemEntity.fromJson(querySnapshot.docs.first.data());
       int oldQuantity = oldObjCartItem.quantity;
-      oldObjCartItem = oldObjCartItem.copyWith(quantity: oldQuantity + 1);
+      oldObjCartItem = oldObjCartItem.copyWith(quantity: oldQuantity + quantity);
 
       await _fbStore
           .collection('cart')

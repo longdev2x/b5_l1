@@ -39,8 +39,8 @@ class CartItemWidget extends ConsumerWidget {
               children: [
                 AppImage(
                   imagePath: objProduct.imageUrl,
-                  height: 60.w,
-                  width: 70.w,
+                  height: 50.w,
+                  width: 60.w,
                   boxFit: BoxFit.contain,
                 ),
                 SizedBox(width: 10.w),
@@ -53,7 +53,7 @@ class CartItemWidget extends ConsumerWidget {
                       style: TextStyle(
                           color: AppColors.primaryElement,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16.sp),
+                          fontSize: 14.sp),
                     ),
                     Text(
                       '${objProduct.price.toInt() * objCart.quantity} đồng',

@@ -5,4 +5,5 @@ class AppRouteName {
   static const String detailProduct = '/detailProduct';
   static const String cart = '/cart';
   static const String checkOut = '/checkOut';
+  static const String order = '/order';
 }

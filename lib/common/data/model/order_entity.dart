@@ -1,45 +1,54 @@
 import 'package:exercies4/common/data/model/cart_entity.dart';
+import 'package:uuid/uuid.dart';
 
 class OrderEntity {
   final String id;
   final String userId;
   final List<CartItemEntity> items;
-  final double totalAmount;
+  final double totalPrice;
   final DateTime dateTime;
   final String status;
+  final String name;
   final String address;
+  final String phone;
 
   OrderEntity({
-    required this.id,
+    String? id,
     required this.userId,
     required this.items,
-    required this.totalAmount,
+    required this.totalPrice,
     required this.dateTime,
     required this.status,
+    required this.name,
     required this.address,
-  });
+    required this.phone
+  }) : id = id ?? const Uuid().v4();
 
-  factory OrderEntity.fromMap(Map<String, dynamic> map) {
+  factory OrderEntity.fromJosn(Map<String, dynamic> json) {
     return OrderEntity(
-      id: map['id'] ?? '',
-      userId: map['userId'] ?? '',
-      items: List<CartItemEntity>.from(map['items']?.map((x) => CartItemEntity.fromJson(x)) ?? []),
-      totalAmount: (map['totalAmount'] ?? 0.0).toDouble(),
-      dateTime: DateTime.parse(map['dateTime'] ?? DateTime.now().toIso8601String()),
-      status: map['status'] ?? '',
-      address: map['address'] ?? '',
+      id: json['id'] ?? '',
+      userId: json['userId'] ?? '',
+      items: List<CartItemEntity>.from(json['items']?.json((x) => CartItemEntity.fromJson(x)) ?? []),
+      totalPrice: (json['totalPrice'] ?? 0.0).toDouble(),
+      dateTime: DateTime.parse(json['dateTime'] ?? DateTime.now().toIso8601String()),
+      status: json['status'] ?? '',
+      name: json['name'],
+      address: json['address'] ?? '',
+      phone: json['phone']
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'userId': userId,
       'items': items.map((x) => x.toJson()).toList(),
-      'totalAmount': totalAmount,
+      'totalPrice': totalPrice,
       'dateTime': dateTime.toIso8601String(),
       'status': status,
+      'name' : name,
       'address': address,
+      'phone' : phone,
     };
   }
 }

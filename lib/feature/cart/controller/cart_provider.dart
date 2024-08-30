@@ -19,12 +19,12 @@ class CartNotifier extends AutoDisposeAsyncNotifier<List<CartItemEntity>> {
     return CartRepos.getAllCart();
   }
 
-  Future<void> addCartItem(ProductEntity objProduct) async {
+  Future<void> addCartItem(ProductEntity objProduct, int quantity) async {
     CartItemEntity objCartItem = CartItemEntity(
         userId: Global.storageService.getUserId(),
         price: objProduct.price,
         productId: objProduct.id,
-        quantity: 1);
+        quantity: quantity);
 
     // if (state.value != null) {
     //   state = AsyncData([objCartItem, ...state.value!]);
@@ -33,7 +33,7 @@ class CartNotifier extends AutoDisposeAsyncNotifier<List<CartItemEntity>> {
     // }
 
     try {
-      await CartRepos.addProduct(objCartItem);
+      await CartRepos.addProduct(objCartItem, quantity);
     } on FirebaseException catch (e) {
       throw Exception(e);
     } finally {

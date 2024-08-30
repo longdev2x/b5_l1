@@ -23,13 +23,13 @@ class Application extends ConsumerWidget {
           ? null
           : SafeArea(
               child: Container(
-                padding: const EdgeInsets.all(10),
-                margin: EdgeInsets.only(left: 24.w, right: 24.w, bottom: 10.h),
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                margin: EdgeInsets.only(left: 100.w, right: 100.w, bottom: 10.h),
                 decoration: BoxDecoration(
                     color: AppColors.primaryBg.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(24.r)),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ...List.generate(
                       bottomNavs.length,
@@ -46,6 +46,7 @@ class Application extends ConsumerWidget {
                               AppIconAsset(
                                 path: bottomNavs[index].icon,
                                 iconColor: Colors.white,
+                                size: 45,
                               ),
                             ],
                           ),

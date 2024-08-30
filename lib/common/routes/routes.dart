@@ -4,6 +4,7 @@ import 'package:exercies4/feature/auth/view/auth_screen.dart';
 import 'package:exercies4/feature/cart/view/cart_screen.dart';
 import 'package:exercies4/feature/checkout/view/checkout_screen.dart';
 import 'package:exercies4/feature/detail_product/view/detail_product_screen.dart';
+import 'package:exercies4/feature/order/view/order_screen.dart';
 import 'package:exercies4/feature/welcome/welcome_screen.dart';
 import 'package:exercies4/global.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,7 @@ class AppRoutes {
     const RouteEntity(name: AppRouteName.detailProduct, screen: DetailProductScreen()),
     const RouteEntity(name: AppRouteName.cart, screen: CartScreen()),
     const RouteEntity(name: AppRouteName.checkOut, screen: CheckoutScreen()),
+    const RouteEntity(name: AppRouteName.order, screen: OrderScreen()),
   ];
 
 

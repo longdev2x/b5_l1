@@ -45,7 +45,7 @@ class HomeScreen extends ConsumerWidget {
           children: [
             AppSearchBar(
               onTap: () {},
-              hintText: 'Sản phẩm cần tìm?',
+              hintText: 'Chưa triển khai',
             ),
             SizedBox(height: 10.h),
             Text(
@@ -86,7 +86,7 @@ class HomeScreen extends ConsumerWidget {
                         ref.read(isLoaderProvider.notifier).state = true;
                         await ref
                             .read(cartProvider.notifier)
-                            .addCartItem(products[index]);
+                            .addCartItem(products[index], 1);
                         ref.read(isLoaderProvider.notifier).state = false;
                         navKey.currentState!.pushNamed(AppRouteName.cart);
                       },
