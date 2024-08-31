@@ -12,6 +12,8 @@ class OrderRepos {
   }
 
   static Future<void> addOrder(OrderEntity objOrder) async {
+    print('zzz-1');
     _fbStore.collection('order').doc(objOrder.id).set(objOrder.toJson());
+     print('zzz-2');
   }
 }

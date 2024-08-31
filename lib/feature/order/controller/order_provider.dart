@@ -17,11 +17,16 @@ class OrderNotifier extends AsyncNotifier<List<OrderEntity>>{
   }
 
   Future<void> addOrder(OrderEntity objOrder) async {
-    state = AsyncData([objOrder, ...state.value!]);
+     print('zzz-01');
+    //  print(state.value);
+    // state = AsyncData([objOrder, ...state.value!]);
+     print('zzz-02');
 
     try {
       OrderRepos.addOrder(objOrder);
+       print('zzz-03');
     } on FirebaseException catch(e) {
+      print('zzzok-$e');
       throw Exception(e);
     } finally {
       state = await AsyncValue.guard(() async => await _getAll());

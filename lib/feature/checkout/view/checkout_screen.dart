@@ -46,7 +46,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     final fetchCarts = ref.watch(cartProvider);
-
+    final bool isLoader = ref.watch(isLoaderProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
@@ -163,7 +163,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-                    child: AppButton(
+                    child: isLoader 
+                    ? const Center(child: CircularProgressIndicator(),)
+                    : AppButton(
                       name: 'Mua ngay',
                       ontap: () async {
                         if (!_formKey.currentState!.validate()) return;

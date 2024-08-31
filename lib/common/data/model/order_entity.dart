@@ -1,4 +1,5 @@
 import 'package:exercies4/common/data/model/cart_entity.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 class OrderEntity {
@@ -28,7 +29,7 @@ class OrderEntity {
     return OrderEntity(
       id: json['id'] ?? '',
       userId: json['userId'] ?? '',
-      items: List<CartItemEntity>.from(json['items']?.json((x) => CartItemEntity.fromJson(x)) ?? []),
+      items: json['items'] != null ? (json['items'] as List).map((e) => CartItemEntity.fromJson(e)).toList() : [],
       totalPrice: (json['totalPrice'] ?? 0.0).toDouble(),
       dateTime: DateTime.parse(json['dateTime'] ?? DateTime.now().toIso8601String()),
       status: json['status'] ?? '',
@@ -50,5 +51,10 @@ class OrderEntity {
       'address': address,
       'phone' : phone,
     };
+  }
+
+  String get dateFormat {
+    final format = DateFormat.yMd();
+    return format.format(dateTime);
   }
 }
